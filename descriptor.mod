@@ -5,5 +5,5 @@ tags={
 dependencies={
 		"Beyond Typus"
 }
-name="Misc Edits Local"
+name="Misc Edits"
 supported_version="1.33.2"
