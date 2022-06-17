@@ -1,9 +1,6 @@
-version="1.32"
+version="1.33"
 tags={
 	"Utilities"
 }
-dependencies={
-		"Beyond Typus"
-}
 name="Misc Edits"
-supported_version="1.33.2"
+supported_version="1.33.3"
