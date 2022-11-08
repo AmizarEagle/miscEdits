@@ -36,9 +36,6 @@ personal_union = {}
 client_vassal = {}
 client_march = {}
 colony = {}
-crown_colony = {}
-private_enterprise = {}
-self_governing_colony = {}
 tributary_state = {}
 
 default = {
@@ -48,7 +45,8 @@ default = {
 	diplomacy_subject_sprite = GFX_diplomacy_amvassal	# The one that the subject sees
 
 	# Triggers:
-	is_potential_overlord = { always = no } 			# This part is not copied in copy_from. Actual default is equivalent to always = yes
+	#is_potential_overlord = { always = no } 			# This part is not copied in copy_from. Actual default is equivalent to always = yes
+	#can_be_established = { always = no }				# Ditto
 	
 	# Properties:
 	has_overlords_ruler = no
@@ -86,14 +84,7 @@ default = {
 	can_send_missionary_to_subject = yes				# Requires Cradle of Civilization
 	can_union_break = no								# Only works together with has_overlords_ruler
 	overlord_can_fabricate_for = yes
-	does_overlord_size_count_for_warscore_cost = yes
-	is_colony_subtype = no
-	is_march = no
-	forms_trade_companies = yes
-	can_concentrate_development = yes
-	can_have_great_projects_moved_by_overlord = yes
-	extend_trading_range = no
-
+	
 	max_government_rank = 0								# 0 means no limit
 	cities_required_for_bonuses = 0						# How many cities the subject needs before giving bonuses to overlord
 	trust_on_start = 35									# Overlord and subject will each get this much extra trust with each other at game start
@@ -104,16 +95,13 @@ default = {
 	liberty_desire_same_dynasty = 0.0
 	liberty_desire_revolution = 30.0					# Liberty desire at 100% revolution spread in country
 	pays_overlord = 0.0									# 1.0 represents the amount payed by vassals
+	forcelimit_bonus = 0.0								# 1.0 represents bonus from having a vassal
 	forcelimit_to_overlord = 0.0						# Percent of subject FL to use as base for modifiers
-	naval_forcelimit_to_overlord = 0.0					# Percent of subject FL to use as base for modifiers
-	manpower_to_overlord = 0.0							# Percent of subject FL to use as base for modifiers
-	sailors_to_overlord = 0.0							# Percent of subject FL to use as base for modifiers
 	military_focus = 1.0								# How much the AI subject should spend etc. on army and forts. 0 should make them spend nothing. Very high values will probably not make a big difference since there will be sanity checks.
-	annex_cost_per_development = 8.0					# annex/integrate cost per development
 
 	relative_power_class = 1 							# See description above
-	should_quit_wars_on_activation = yes
 	diplomacy_view_class = 1							# See description above
+
 	can_fight = {
 	}
 	can_rival = {
@@ -162,9 +150,6 @@ default = {
 	knowledge_sharing = yes
 	block_settlement_growth = yes
 	allow_settlement_growth = yes
-	change_colonial_type = no
-	upgrade_subject_type = no
-
 	# (special)
 	sword_hunt = no
 	sankin_kotai = no
@@ -194,18 +179,17 @@ vassal = {
 	can_be_annexed = yes
 	has_power_projection = no
 	gets_help_with_rebels = yes
-	forms_trade_companies = no
 
 	max_government_rank = 1
 
 	liberty_desire_development_ratio = 0.15			#halved for dev doubling. Actually x0.6, but who doesn't prefer a clean number
 	liberty_desire_same_dynasty = -5.0
 	pays_overlord = 1.0
+	forcelimit_bonus = 1.0
 	forcelimit_to_overlord = 0.1
 
 	relative_power_class = 2
-	should_quit_wars_on_activation = yes
-
+	
 	restoration_cb = cb_disloyal_vassal
 
 	# Subject Interactions:
@@ -222,23 +206,6 @@ vassal = {
 	}
 	modifier_overlord = {
 		modifier = vassal_subject
-	}
-	modifier_overlord = {
-		modifier = pirate_subject
-		trigger = {
-			has_government_attribute = is_pirate_republic_reform
-			overlord = {
-				has_government_attribute = pirate_vassal_bonus
-			}
-		}
-	}
-	modifier_subject = {
-		modifier = subject_tax_modifier
-		trigger = {
-			overlord = {
-				has_government_attribute = subject_tax_modifier_25
-			}
-		}
 	}
 
 	overlord_opinion_modifier = is_vassal
@@ -259,8 +226,6 @@ march = {
 	base_liberty_desire = -15.0
 	can_be_annexed = no
 	forcelimit_to_overlord = 0.2
-	is_march = yes
-	forms_trade_companies = no
 
 	# Subject Interactions:
 	scutage = no
@@ -288,14 +253,6 @@ march = {
 		expiration_message_overlord = MARCHTOOLARGE
 		expiration_message_subject = MARCHTOOLARGEUS
 	}
-	modifier_subject = {
-		modifier = subject_tax_modifier
-		trigger = {
-			overlord = {
-				has_government_attribute = subject_tax_modifier_25
-			}
-		}
-	}
 }
 
 daimyo_vassal = {
@@ -315,8 +272,6 @@ daimyo_vassal = {
 	separatists_become_subjects = yes
 	allows_taking_land_without_independence = yes
 	can_use_claims = no
-	forms_trade_companies = no
-	can_concentrate_development = no
 
 	trust_on_start = 0
 	
@@ -324,7 +279,6 @@ daimyo_vassal = {
 	military_focus = 1.2
 
 	relative_power_class = 1
-	should_quit_wars_on_activation = yes
 
 	can_fight = {
 		same_overlord = daimyo_vassal
@@ -396,14 +350,11 @@ personal_union = {
 	can_have_subjects_of_other_types = yes
 	can_union_break = yes
 	transfer_subjects_when_made = yes
-	can_concentrate_development = no
-	extend_trading_range = yes
 
 	liberty_desire_negative_prestige = 1.0
 	military_focus = 0.66
 
 	relative_power_class = 1
-	should_quit_wars_on_activation = yes
 
 	restoration_cb = cb_restore_personal_union
 	
@@ -416,18 +367,6 @@ personal_union = {
 	# Modifiers:
 	modifier_overlord = {
 		modifier = union_subject
-	}
-	modifier_overlord = {
-		trigger = {
-			overlord = { has_government_attribute = personal_union_war_contribution }
-		}
-		modifier = pu_overlord_bonus
-	}
-	modifier_subject = {
-		trigger = {
-			overlord = { has_government_attribute = personal_union_war_contribution }
-		}
-		modifier = pu_subject_bonus
 	}
 
 	overlord_opinion_modifier = in_union
@@ -444,7 +383,6 @@ client_vassal = {
 
 	# Properties:
 	created_by_overlord = yes
-	extend_trading_range = yes
 
 	base_liberty_desire = -25.0
 	liberty_desire_revolution = 0
@@ -463,7 +401,6 @@ client_march = {
 
 	# Properties:
 	created_by_overlord = yes
-	extend_trading_range = yes
 
 	base_liberty_desire = -40.0
 	liberty_desire_revolution = 0
@@ -482,6 +419,7 @@ colony = {
 	diplomacy_subject_sprite = GFX_diplomacy_subjectcolony
 
 	# Properties:
+	transfer_trade_power = yes
 	can_release_and_play = yes
 	uses_tariffs = yes
 	eats_overlords_colonies = yes
@@ -494,31 +432,21 @@ colony = {
 	overlord_enforce_peace_attacking = yes
 	can_transfer_in_peace = no
 	press_sailors = yes
-	transfer_trade_power = yes
-	can_concentrate_development = no
-	extend_trading_range = yes
-
-	liberty_desire_development_ratio = 0.1
+	forcelimit_bonus = 1.0
+	
+	liberty_desire_development_ratio = 0.05			#halved for dev doubling. 
 
 	max_government_rank = 1
-	cities_required_for_bonuses = 10
 
 	relative_power_class = 0
-	should_quit_wars_on_activation = yes
 
 	can_fight = {
 		other_overlord = colony
-		other_overlord = crown_colony
-		other_overlord = private_enterprise
-		other_overlord = self_governing_colony
 		neighboring_primitives = yes
 		colonial_region_nations = yes
 	}
 	can_rival = {
 		other_overlord = colony
-		other_overlord = crown_colony
-		other_overlord = private_enterprise
-		other_overlord = self_governing_colony
 		neighboring_primitives = yes
 		colonial_region_nations = yes
 	}
@@ -642,14 +570,21 @@ tributary_state = {
 		}
 	}
 	modifier_subject = {
-		modifier = new_world_exploitation_modifier
+		modifier = tributary_state_behind_overlord_tech_dip
 		trigger = {
-			overlord = { has_government_attribute = extra_trade_goods_for_colonial_subjects }
+			ROOT = {
+				NOT = { dip_tech = FROM }
+			}
 		}
 	}
-
-	overlord_opinion_modifier = colonial_relation
-	subject_opinion_modifier = colonial_relation
+	modifier_subject = {
+		modifier = tributary_state_behind_overlord_tech_mil
+		trigger = {
+			ROOT = {
+				NOT = { mil_tech = FROM }
+			}
+		}
+	}
 }
 
 crown_colony = {
@@ -661,10 +596,14 @@ crown_colony = {
 	can_send_missionary_to_subject = yes	
 	count = colony
 
-	forcelimit_to_overlord = 0.3
-	manpower_to_overlord = 0.3
-	naval_forcelimit_to_overlord = 0.01
-	sailors_to_overlord = 0.01
+	forcelimit_bonus = 1.0
+	forcelimit_to_overlord = 0.5
+	manpower_bonus = 1.0
+	manpower_to_overlord = 0.5
+	naval_forcelimit_bonus = 0.5
+	naval_forcelimit_to_overlord = 0.05
+	sailors_bonus = 0.5
+	sailors_to_overlord = 0.05
 
 	# Subject Interactions:
 	embargo_rivals = yes
@@ -677,7 +616,6 @@ crown_colony = {
 	allow_settlement_growth = yes
 	
 	# Modifiers:
-	modifier_overlord = clear
 	modifier_overlord = {
 		modifier = crown_colony_overlord
 	}
@@ -695,10 +633,14 @@ private_enterprise = {
 	is_colony_subtype = yes
 	count = colony
 
+	forcelimit_bonus = 0.0
 	forcelimit_to_overlord = 0.0
+	manpower_bonus = 0.0
 	manpower_to_overlord = 0.0
-	naval_forcelimit_to_overlord = 0.3
-	sailors_to_overlord = 0.3
+	naval_forcelimit_bonus = 1.0
+	naval_forcelimit_to_overlord = 0.5
+	sailors_bonus = 1.0
+	sailors_to_overlord = 0.5
 
 	# Subject Interactions:
 	replace_governor = no
@@ -706,7 +648,6 @@ private_enterprise = {
 	allow_settlement_growth = no
 	
 	# Modifiers:	
-	modifier_overlord = clear
 	modifier_overlord = {
 		modifier = private_enterprise_overlord
 	}
@@ -724,10 +665,14 @@ self_governing_colony = {
 	is_colony_subtype = yes
 	count = colony
 
-	forcelimit_to_overlord = 0.002
-	manpower_to_overlord = 0.002
-	naval_forcelimit_to_overlord = 0.002
-	sailors_to_overlord = 0.002
+	forcelimit_bonus = 0.1
+	forcelimit_to_overlord = 0.05
+	manpower_bonus = 0.1
+	manpower_to_overlord = 0.05
+	naval_forcelimit_bonus = 0.1
+	naval_forcelimit_to_overlord = 0.05
+	sailors_bonus = 0.1
+	sailors_to_overlord = 0.05
 
 	# Subject Interactions:
 	replace_governor = no
@@ -736,7 +681,6 @@ self_governing_colony = {
 	press_sailors = no
 	
 	# Modifiers:	
-	modifier_overlord = clear
 	modifier_overlord = {
 		modifier = self_governing_colony_overlord
 	}
@@ -752,28 +696,22 @@ tributary_state = {
 	#is_subject_except_tributary_trigger
 	#is_free_or_tributary_trigger
 	copy_from = default
-	can_have_great_projects_moved_by_overlord = no
 
 	# Triggers:
 	is_potential_overlord = {
+		has_dlc = "Mandate of Heaven"
+		NOT = { 
+			is_subject_of_type = tributary_state
+		}
 		OR = {
-			AND = {
-				has_dlc = "Mandate of Heaven"
-				NOT = { 
-					is_subject_of_type = tributary_state
-				}
-				OR = {
-					has_reform = celestial_empire
-					has_government_attribute = has_tributaries
-					has_country_flag = can_create_tributaries_flag
-					has_country_flag = can_create_tributaries_flag_estate
-					is_nomad = yes
-					religion_group = eastern
-					technology_group = chinese
-					technology_group = polynesian_tech
-				}
-			}
-			has_country_flag = forced_tributary_state	#A special flag for the Ottomans so they can get Crimea without allowing them to make tributaries by default
+			has_reform = celestial_empire
+			has_government_attribute = has_tributaries
+			has_country_flag = can_create_tributaries_flag
+			has_country_flag = can_create_tributaries_flag_estate
+			is_nomad = yes
+			religion_group = eastern
+			technology_group = chinese
+			technology_group = polynesian_tech
 		}
 	}
 	
