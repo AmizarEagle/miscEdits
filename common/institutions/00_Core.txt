@@ -149,7 +149,7 @@ feudalism = {
 	#on_start = institution_events.1
 
 	can_embrace = {
-		always = yes
+		owner = { NOT = {government = tribal} }
 	}
 
 	embracement_speed = {
@@ -4423,107 +4423,107 @@ global_trade = {
 		###End of BT Tech group specific spread modifiers - global_trade
 		#######################################################################
 		#BTAddOn note spread of this institution is much more international and much less Euro centric than previous, but this is intentional, I'd say. Trade power matters much more than geography here, and CoT is king.
-		modifier = {
-			factor = 0.03
-			scale = yes
-			force_potential = yes	# Hide the this modifier when potential is false
-			potential = {
-				NOT = { has_building = trade_depot }
-				NOT = { has_building = stock_exchange }
-			}			#BTAddOn new - this cleans up UI by making only one or two spread factors show, instead of all three. Might cause some minor confusion to a player because trade depot and stock exchange don't appear to spread it at first, but in my opinion cleaning it up does more good than harm, even so
-			has_building = marketplace
-		}
-		modifier = {
-			factor = 0.1
-			scale = yes
-			force_potential = yes	# Hide the this modifier when potential is false
-			potential = {
-				OR = {
-					has_building = marketplace
-					has_building = trade_depot
-				}
-			}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion to a player because trade depot and stock exchange don't appear to spread it at first, but in my opinion cleaning it up does more good than harm, even so
-			has_building = trade_depot
-		}
-		modifier = {
-			factor = 0.3			#BTAddOn changed from 1.0. Want CoT to be the most important for this institution, rather than buildings and TP, so lowering the bonus here.
-			scale = yes
-			force_potential = yes	# Hide the this modifier when potential is false
-			potential = {
-				OR = {
-					has_building = trade_depot
-					has_building = stock_exchange
-				}
-			}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion to a player because trade depot and stock exchange don't appear to spread it at first, but in my opinion cleaning it up does more good than harm, even so
-			has_building = stock_exchange
-		}
+		#modifier = {
+		#	factor = 0.03
+		#	scale = yes
+		#	force_potential = yes	# Hide the this modifier when potential is false
+		#	potential = {
+		#		NOT = { has_building = trade_depot }
+		#		NOT = { has_building = stock_exchange }
+		#	}			#BTAddOn new - this cleans up UI by making only one or two spread factors show, instead of all three. Might cause some minor confusion to a player because trade depot and stock exchange don't appear to spread it at first, but in my opinion cleaning it up does more good than harm, even so
+		#	has_building = marketplace
+		#}
+		#modifier = {
+		#	factor = 0.1
+		#	scale = yes
+		#	force_potential = yes	# Hide the this modifier when potential is false
+		#	potential = {
+		#		OR = {
+		#			has_building = marketplace
+		#			has_building = trade_depot
+		#		}
+		#	}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion to a player because trade depot and stock exchange don't appear to spread it at first, but in my opinion cleaning it up does more good than harm, even so
+		#	has_building = trade_depot
+		#}
+		#modifier = {
+		#	factor = 0.3			#BTAddOn changed from 1.0. Want CoT to be the most important for this institution, rather than buildings and TP, so lowering the bonus here.
+		#	scale = yes
+		#	force_potential = yes	# Hide the this modifier when potential is false
+		#	potential = {
+		#		OR = {
+		#			has_building = trade_depot
+		#			has_building = stock_exchange
+		#		}
+		#	}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion to a player because trade depot and stock exchange don't appear to spread it at first, but in my opinion cleaning it up does more good than harm, even so
+		#	has_building = stock_exchange
+		#}
 		########################################################################################################################################################		#BTAddOn Note - removing trade power factors for global trade spread entirely. They are messy, complicated, don't encourage proper spread, and are redundant as most major factors in tp (CoT/buildings) also spread global trade themselves, estuaries lose out, but oh well. Leaving this here in case I reconsider.
 		########################################################################################################################################################		
-		#modifier = {
-		#	factor = 0.01 #Not scaled			#BTAddOn changed from 0.4. It is scaled now.
-		#	scale = yes
-		#	force_potential = yes	# Hide the this modifier when potential is false
-		#	potential = {
-		#		NOT = { province_trade_power = 10 }
-		#	}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
-		#	custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
-		#		tooltip = tooltip_bt_add_new_instituiton_details_s
-		#		province_trade_power = 5			#BTAddOn changed from 15. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow slightly, even without a CoT
-		#		NOT = { province_trade_power = 10 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
-		#	}
-		#}
-		#modifier = {
-		#	factor = 0.05 #Not Scaled			#BTAddOn changed from 0.8 (total 1.2) It is scaled now.
-		#	scale = yes
-		#	force_potential = yes	# Hide the this modifier when potential is false
-		#	potential = {
-		#		province_trade_power = 5
-		#		NOT = { province_trade_power = 20 }
-		#	}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
-		#	custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
-		#		tooltip = tooltip_bt_add_new_instituiton_details_t
-		#		province_trade_power = 10			#BTAddOn changed from 25. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow, even without a CoT
-		#		NOT = { province_trade_power = 20 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
-		#	}
-		#}
-		#modifier = {
-		#	factor = 0.2 #Not Scaled			#BTAddOn changed from 0.16 (total 1.36, this was a smaller bonus than all the others, presumably an oversight). It is scaled now.
-		#	scale = yes
-		#	force_potential = yes	# Hide the this modifier when potential is false
-		#	potential = {
-		#		province_trade_power = 10
-		#		NOT = { province_trade_power = 40 }
-		#	}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
-		#	custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
-		#		tooltip = tooltip_bt_add_new_instituiton_details_u
-		#		province_trade_power = 20			#BTAddOn changed from 35. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow, even without a CoT
-		#		NOT = { province_trade_power = 40 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
-		#	}
-		#}
-		#modifier = {
-		#	factor = 0.6 #Not Scaled			#BTAddOn changed from 1.4 (total 1.96) It is scaled now.
-		#	scale = yes
-		#	force_potential = yes	# Hide the this modifier when potential is false
-		#	potential = {
-		#		province_trade_power = 20
-		#		NOT = { province_trade_power = 60 }
-		#	}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
-		#	custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
-		#		tooltip = tooltip_bt_add_new_instituiton_details_v
-		#		province_trade_power = 40			#BTAddOn changed from 45. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow, even without a CoT
-		#		NOT = { province_trade_power = 60 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
-		#	}
-		#}
-		#modifier = {
-		#	factor = 1.2 #Not Scaled			#BTAddOn note - in vanilla max stacked spread was 1.96 non-scaled at 45 tp, now it is 1.2 scaled at 60 tp. It should more or less even out, spreading much faster with high dev, slower with low dev. Also note CoT spread increased by 1.9 and trade build spread reduced by 0.6
-		#	scale = yes
-		#	force_potential = yes	# Hide the this modifier when potential is false
-		#	potential = { province_trade_power = 40 }			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
-		#	custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
-		#		tooltip = tooltip_bt_add_new_instituiton_details_w
-		#		province_trade_power = 60			#BTAddOn new tier for super high trade power provinces (usually requires a CoT and an estuary, a GCoT, or some obscene mercantalism and dev, but it is very possible.)
-		#	}
-		#}
+		modifier = {
+			factor = 0.01 #Not scaled			#BTAddOn changed from 0.4. It is scaled now.
+			scale = yes
+			force_potential = yes	# Hide the this modifier when potential is false
+			potential = {
+				NOT = { province_trade_power = 10 }
+			}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
+			custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
+				tooltip = tooltip_bt_add_new_instituiton_details_s
+				province_trade_power = 5			#BTAddOn changed from 15. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow slightly, even without a CoT
+				NOT = { province_trade_power = 10 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
+			}
+		}
+		modifier = {
+			factor = 0.05 #Not Scaled			#BTAddOn changed from 0.8 (total 1.2) It is scaled now.
+			scale = yes
+			force_potential = yes	# Hide the this modifier when potential is false
+			potential = {
+				province_trade_power = 5
+				NOT = { province_trade_power = 20 }
+			}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
+			custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
+				tooltip = tooltip_bt_add_new_instituiton_details_t
+				province_trade_power = 10			#BTAddOn changed from 25. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow, even without a CoT
+				NOT = { province_trade_power = 20 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
+			}
+		}
+		modifier = {
+			factor = 0.2 #Not Scaled			#BTAddOn changed from 0.16 (total 1.36, this was a smaller bonus than all the others, presumably an oversight). It is scaled now.
+			scale = yes
+			force_potential = yes	# Hide the this modifier when potential is false
+			potential = {
+				province_trade_power = 10
+				NOT = { province_trade_power = 40 }
+			}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
+			custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
+				tooltip = tooltip_bt_add_new_instituiton_details_u
+				province_trade_power = 20			#BTAddOn changed from 35. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow, even without a CoT
+				NOT = { province_trade_power = 40 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
+			}
+		}
+		modifier = {
+			factor = 0.6 #Not Scaled			#BTAddOn changed from 1.4 (total 1.96) It is scaled now.
+			scale = yes
+			force_potential = yes	# Hide the this modifier when potential is false
+			potential = {
+				province_trade_power = 20
+				NOT = { province_trade_power = 60 }
+			}			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
+			custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
+				tooltip = tooltip_bt_add_new_instituiton_details_v
+				province_trade_power = 40			#BTAddOn changed from 45. Different avg dev per province and some other minor changes in BT requires this to be tweaked a bit, will now cause most moderately rich provinces to grow, even without a CoT
+				NOT = { province_trade_power = 60 }			#BTAddOn new - TP spread bonues no longer stack, this disables one when the next is enabled
+			}
+		}
+		modifier = {
+			factor = 1.2 #Not Scaled			#BTAddOn note - in vanilla max stacked spread was 1.96 non-scaled at 45 tp, now it is 1.2 scaled at 60 tp. It should more or less even out, spreading much faster with high dev, slower with low dev. Also note CoT spread increased by 1.9 and trade build spread reduced by 0.6
+			scale = yes
+			force_potential = yes	# Hide the this modifier when potential is false
+			potential = { province_trade_power = 40 }			#BTAddOn new - this cleans up UI by making only one spread factor show, instead of all three. Might cause some minor confusion, but in my opinion cleaning it up does more good than harm, even so
+			custom_trigger_tooltip = {			#BTAddOn new - custom tooltip to clean things up, hopefully
+				tooltip = tooltip_bt_add_new_instituiton_details_w
+				province_trade_power = 60			#BTAddOn new tier for super high trade power provinces (usually requires a CoT and an estuary, a GCoT, or some obscene mercantalism and dev, but it is very possible.)
+			}
+		}
 		#BTAddOn note - spread from a CoT will depend on other embraced institutions. Spread is /4 for no printing, and impossible without colonialism. If a society can't even travel to colonise, it can't develop bonds, stocks, and international trading mechanisms for commerce a world away, no matter how
 		#important a local trading centre it might be.
 		modifier = {

@@ -126,6 +126,10 @@ cb_insult = {
 	is_triggered_only = yes
 
 	months = 1
+	
+	prerequisites = {
+		ai = no
+	}
 
 	war_goal = superiority_insult_mutual
 }
@@ -145,7 +149,11 @@ cb_vassalize_mission = {
 	valid_for_subject = no
 
 	is_triggered_only = yes
-	months = 120
+	months = 1
+	
+	prerequisites = {
+		ai = no
+	}
 
 	war_goal = take_capital_vassalize
 }

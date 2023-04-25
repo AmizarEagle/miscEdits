@@ -1504,7 +1504,7 @@ dutch_republic = {
 		allow = { has_dlc = "Common Sense" }
 		has_parliament = yes
 	}
-	duration = 4
+	duration = 50
 }
 
 
